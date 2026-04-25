@@ -147,8 +147,9 @@ class LLMClient:
         prompt += (
             "\nUse the sources when relevant, but prioritize the selected World Context for examples.\n"
             "If an image is provided, incorporate its details into the explanation.\n"
-            "Return JSON with summary, key_points, next_steps, and quiz.\n"
+            "Return JSON with summary, detailed_explanation (a 2-3 paragraph deep dive), key_points (list), next_steps (list), and quiz (list of objects).\n"
             "Sources:\n"
             f"{source_block}"
         )
         return prompt
+

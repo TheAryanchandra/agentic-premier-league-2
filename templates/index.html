@@ -40,10 +40,10 @@
             </label>
             <label>
               Mobile Number (Optional)
-              <div class="mobile-input-group">
+              <!-- <div class="mobile-input-group">
                 <span class="prefix">+91</span>
                 <input name="mobile" id="mobile-input" placeholder="10-digit number" maxlength="10" />
-              </div>
+              </div> -->
             </label>
             <label>
               Age Group
@@ -90,17 +90,17 @@
 
         <form id="learn-form" class="panel locked">
           <h2>Learn a concept <span id="ready-badge-container"></span></h2>
-          <label>
+          <label class="concept-label">
             Concept
-            <input name="concept" id="concept-input" placeholder="Explain DLS method / REST APIs / photosynthesis" required />
+            <div class="input-with-dropdown">
+              <input name="concept" id="concept-input" placeholder="Explain DLS method / REST APIs / photosynthesis" required autocomplete="off" />
+              <div id="concept-autocomplete" class="autocomplete-dropdown" style="display: none;"></div>
+            </div>
           </label>
-          <div class="suggestions-row">
-            <span class="suggestion-chip" data-concept="REST APIs">REST APIs</span>
-            <span class="suggestion-chip" data-concept="Photosynthesis">Photosynthesis</span>
-            <span class="suggestion-chip" data-concept="DLS Method">DLS Method</span>
-            <span class="suggestion-chip" data-concept="Quantum Physics">Quantum Physics</span>
-            <span class="suggestion-chip" data-concept="Blockchain">Blockchain</span>
+          <div id="suggestions-container" class="suggestions-row">
+            <!-- Chips will be injected here -->
           </div>
+
           <label>
             Domain hint
             <select name="domain">
@@ -155,7 +155,7 @@
       <section class="panel output">
         <div class="output-header">
           <div>
-            <p class="eyebrow">Personalized Lesson</p>
+            <p class="eyebrow">Recent Lessons</p>
             <h2 id="result-title">Ready to explore?</h2>
             <p id="active-profile-info" class="profile-info-pill"></p>
           </div>
@@ -167,42 +167,10 @@
             <p id="summary" class="summary">
               Save a learner profile, then ask about any concept to see the adaptive lesson.
             </p>
-          </div>
-
-          <div class="lesson-grid">
-            <div class="card">
-              <div class="card-header">
-                <span class="icon">💡</span>
-                <h3>Key takeaways</h3>
-              </div>
-              <ul id="key-points" class="lesson-list"></ul>
-            </div>
-
-            <div class="card">
-              <div class="card-header">
-                <span class="icon">🚀</span>
-                <h3>Next steps</h3>
-              </div>
-              <ul id="next-steps" class="lesson-list"></ul>
-            </div>
-
-            <div class="card quiz-card">
-              <div class="card-header">
-                <span class="icon">📝</span>
-                <h3>Check your knowledge</h3>
-              </div>
-              <ul id="quiz" class="lesson-list"></ul>
-            </div>
-
-            <div class="card sources-card">
-              <div class="card-header">
-                <span class="icon">🌐</span>
-                <h3>Deep dive sources</h3>
-              </div>
-              <ul id="sources" class="lesson-list horizontal-sources"></ul>
-            </div>
+            <button id="main-view-details" class="view-details-btn" style="display: none;" onclick="viewCurrentDetails()">View Full Details →</button>
           </div>
         </div>
+
         
         <div class="history-section">
           <h3>Your Learning Journey</h3>
@@ -211,6 +179,70 @@
       </section>
     </main>
 
+    <!-- Result Modal -->
+    <div id="lesson-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-container">
+        <button id="close-modal" class="close-btn">&times;</button>
+        <div class="modal-header">
+          <p class="eyebrow">Personalized Lesson</p>
+          <h2 id="modal-title">Concept Name</h2>
+          <div class="modal-meta">
+            <span id="modal-domain" class="pill">Domain</span>
+            <span id="modal-profile-info" class="profile-info-pill visible"></span>
+          </div>
+        </div>
+        
+        <div class="modal-content">
+          <div class="summary-card">
+            <p id="modal-summary" class="summary"></p>
+            
+            <div id="modal-deep-dive" class="deep-dive-section" style="display: none;">
+              <h4>Deep Dive</h4>
+              <div id="modal-detailed-explanation" class="detailed-text"></div>
+            </div>
+
+            <button id="toggle-deep-dive" class="text-link-btn">Show Detailed Breakdown ↓</button>
+          </div>
+
+
+          <div class="lesson-grid">
+            <div class="card">
+              <div class="card-header">
+                <span class="icon">💡</span>
+                <h3>Key takeaways</h3>
+              </div>
+              <ul id="modal-key-points" class="lesson-list"></ul>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <span class="icon">🚀</span>
+                <h3>Next steps</h3>
+              </div>
+              <ul id="modal-next-steps" class="lesson-list"></ul>
+            </div>
+
+            <div class="card quiz-card">
+              <div class="card-header">
+                <span class="icon">📝</span>
+                <h3>Check your knowledge</h3>
+              </div>
+              <ul id="modal-quiz" class="lesson-list"></ul>
+            </div>
+
+            <div class="card sources-card">
+              <div class="card-header">
+                <span class="icon">🌐</span>
+                <h3>Deep dive sources</h3>
+              </div>
+              <ul id="modal-sources" class="lesson-list horizontal-sources"></ul>
+            </div>
+          </div>
+        </div>
+        <div id="modal-footer" class="lesson-footer"></div>
+      </div>
+    </div>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
-  </html>
+</html>
