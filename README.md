@@ -155,13 +155,6 @@ Open:
 
 ---
 
-## 🚢 Deployment (Google Cloud Run)
-
-### Build
-
-```bash
-gcloud builds submit --tag gcr.io/concept-learning-engine-551694156067/concept-learning-engine-551694156067
-```
 
 
 ## 🛡️ Security & Privacy
