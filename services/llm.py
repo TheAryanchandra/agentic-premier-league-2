@@ -81,7 +81,9 @@ class LLMClient:
             f"Objective: {personalization['objective']}\n"
             f"World Context: {context}\n"
             f"Learner pace: {personalization['pace']}\n"
+            f"Learning style: {personalization['style']}\n"
             f"Knowledge level: {personalization['knowledge_level']}\n"
+            f"Preferred depth: {personalization['depth']}\n"
             f"Terminology: {personalization['terminology']}\n"
         )
 

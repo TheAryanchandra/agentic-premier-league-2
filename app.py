@@ -67,8 +67,8 @@ def create_app() -> Flask:
         )
         return jsonify(result)
 
-    @app.get("/api/history/<int:learner_id>")
-    def history(learner_id: int):
+    @app.get("/api/history/<learner_id>")
+    def history(learner_id: str):
         return jsonify({"history": repository.get_interaction_history(learner_id)})
 
     return app

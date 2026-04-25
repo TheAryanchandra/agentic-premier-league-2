@@ -32,7 +32,8 @@ profileForm.addEventListener("submit", async (event) => {
   }
 
   learnerId = data.learner.id;
-  profileStatus.textContent = `Profile saved for ${data.learner.name}. Learner ID: ${learnerId}`;
+  profileStatus.textContent = `Profile saved for ${data.learner.name}.`;
+  loadHistory();
 });
 
 learnForm.addEventListener("submit", async (event) => {
@@ -70,6 +71,7 @@ learnForm.addEventListener("submit", async (event) => {
   }
 
   renderLesson(data);
+  loadHistory();
 });
 
 function renderLesson(data) {
@@ -110,6 +112,26 @@ function renderList(id, items, allowHtml = false) {
     } else {
       li.textContent = item;
     }
+    list.appendChild(li);
+  });
+}
+
+async function loadHistory() {
+  if (!learnerId) return;
+  const response = await fetch(`/api/history/${learnerId}`);
+  const data = await response.json();
+  const list = document.getElementById("history-list");
+  list.innerHTML = "";
+  
+  if (!data.history || data.history.length === 0) {
+    list.innerHTML = "<li>No past lessons yet.</li>";
+    return;
+  }
+
+  data.history.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.concept} (${item.domain})`;
+    li.className = "history-item";
     list.appendChild(li);
   });
 }
