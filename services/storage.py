@@ -27,8 +27,16 @@ class LearningRepository:
                     name TEXT NOT NULL,
                     pace TEXT NOT NULL,
                     learning_style TEXT NOT NULL,
+                    age_group TEXT NOT NULL DEFAULT '19-35',
+                    mobile TEXT,
                     created_at TEXT NOT NULL,
                     updated_at TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS otps (
+                    mobile TEXT PRIMARY KEY,
+                    code TEXT NOT NULL,
+                    created_at TEXT NOT NULL
                 );
 
                 CREATE TABLE IF NOT EXISTS domain_profiles (
@@ -57,15 +65,22 @@ class LearningRepository:
                 """
             )
 
-    def upsert_learner(self, name: str, pace: str, learning_style: str) -> dict[str, Any]:
+    def upsert_learner(
+        self,
+        name: str,
+        pace: str,
+        learning_style: str,
+        age_group: str = "19-35",
+        mobile: str | None = None,
+    ) -> dict[str, Any]:
         now = utc_now()
         with self._connect() as connection:
             cursor = connection.execute(
                 """
-                INSERT INTO learners (name, pace, learning_style, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO learners (name, pace, learning_style, age_group, mobile, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
-                (name, pace, learning_style, now, now),
+                (name, pace, learning_style, age_group, mobile, now, now),
             )
             learner_id = cursor.lastrowid
 
@@ -81,6 +96,25 @@ class LearningRepository:
                 (learner_id,),
             ).fetchone()
         return dict(row) if row else None
+
+    def save_otp(self, mobile: str, code: str) -> None:
+        now = datetime.now(timezone.utc).isoformat()
+        with sqlite3.connect(self.database_path) as connection:
+            connection.execute(
+                "INSERT OR REPLACE INTO otps (mobile, code, created_at) VALUES (?, ?, ?)",
+                (mobile, code, now),
+            )
+
+    def verify_otp(self, mobile: str, code: str) -> bool:
+        with sqlite3.connect(self.database_path) as connection:
+            row = connection.execute(
+                "SELECT code FROM otps WHERE mobile = ?",
+                (mobile,),
+            ).fetchone()
+            if row and row[0] == code:
+                connection.execute("DELETE FROM otps WHERE mobile = ?", (mobile,))
+                return True
+        return False
 
     def upsert_domain_profile(
         self,
@@ -226,12 +260,13 @@ class FirestoreRepository:
         # Firestore doesn't need explicit initialization like SQL
         pass
 
-    def upsert_learner(self, name: str, pace: str, learning_style: str) -> dict[str, Any]:
+    def upsert_learner(self, name: str, pace: str, learning_style: str, age_group: str = "19-35") -> dict[str, Any]:
         doc_ref = self.db.collection("learners").document()
         data = {
             "name": name,
             "pace": pace,
             "learning_style": learning_style,
+            "age_group": age_group,
             "created_at": utc_now(),
             "updated_at": utc_now(),
         }

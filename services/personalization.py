@@ -11,6 +11,7 @@ def build_personalization_context(
 ) -> dict[str, Any]:
     pace = learner["pace"]
     style = learner["learning_style"]
+    age_group = learner.get("age_group", "19-35")
     knowledge_level = (domain_profile or {}).get("knowledge_level", "beginner")
     mastered = (domain_profile or {}).get("mastered_concepts", [])
     struggles = (domain_profile or {}).get("struggle_notes", [])
@@ -22,18 +23,43 @@ def build_personalization_context(
     else:
         depth = "balanced"
 
-    terminology = "plain language" if knowledge_level == "beginner" else "mixed technical language"
-    if knowledge_level == "advanced":
-        terminology = "technical language"
+    # Age-group specific terminology and tone
+    if age_group == "5-7":
+        terminology = "very simple words and emojis"
+        tone = "playful and encouraging (like a fun game)"
+        vocabulary_limit = "200 words"
+    elif age_group == "8-12":
+        terminology = "simple language with fun facts"
+        tone = "curious and storytelling"
+        vocabulary_limit = "500 words"
+    elif age_group == "13-18":
+        terminology = "modern, relatable language"
+        tone = "analytical and trend-aware"
+        vocabulary_limit = "no limit"
+    elif age_group == "36+":
+        terminology = "clear, jargon-free language with historical context"
+        tone = "thoughtful and contextual"
+        vocabulary_limit = "no limit"
+    else:  # 19-35
+        terminology = "professional and technical"
+        tone = "practical and goal-oriented"
+        vocabulary_limit = "no limit"
+
+    # Knowledge level overrides
+    if knowledge_level == "advanced" and age_group not in ["5-7", "8-12"]:
+        terminology = "high-level technical language"
 
     return {
         "concept": concept,
         "objective": objective or "Understand the concept well enough to explain it back.",
         "pace": pace,
         "style": style,
+        "age_group": age_group,
         "knowledge_level": knowledge_level,
         "depth": depth,
         "terminology": terminology,
+        "tone": tone,
+        "vocabulary_limit": vocabulary_limit,
         "mastered_concepts": mastered,
         "struggle_notes": struggles,
         "context": context,

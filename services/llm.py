@@ -12,15 +12,60 @@ class LLMClient:
         self.api_key = os.getenv("LLM_API_KEY", "")
         self.base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
 
+        if self.provider == "google" or (not self.provider and self.api_key.startswith("AIza")):
+            self.provider = "google"
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=self.api_key)
+                self.gemini_model = genai.GenerativeModel(self.model if "gemini" in self.model else "gemini-1.5-flash")
+            except ImportError:
+                print("google-generativeai not installed. Falling back.")
+                self.provider = "mock"
+
     def generate(
         self,
         domain: str,
         personalization: dict[str, Any],
         sources: list[dict[str, Any]],
+        image_data: str | None = None,
     ) -> dict[str, Any] | None:
+        if self.provider == "google":
+            return self._generate_gemini(domain, personalization, sources, image_data)
         if self.provider == "openai" and self.api_key:
             return self._generate_openai(domain, personalization, sources)
         return None
+
+    def _generate_gemini(
+        self,
+        domain: str,
+        personalization: dict[str, Any],
+        sources: list[dict[str, Any]],
+        image_data: str | None = None,
+    ) -> dict[str, Any] | None:
+        prompt = self._build_prompt(domain, personalization, sources)
+        
+        contents = [prompt]
+        if image_data:
+            import base64
+            # Assume base64 encoded string starting with data:image/png;base64,...
+            if "," in image_data:
+                image_data = image_data.split(",")[1]
+            contents.append({
+                "mime_type": "image/jpeg", # Defaulting to jpeg
+                "data": base64.b64decode(image_data)
+            })
+
+        try:
+            response = self.gemini_model.generate_content(
+                contents,
+                generation_config={
+                    "response_mime_type": "application/json",
+                }
+            )
+            return json.loads(response.text)
+        except Exception as e:
+            print(f"Gemini generation error: {e}")
+            return None
 
     def _generate_openai(
         self,
@@ -82,9 +127,12 @@ class LLMClient:
             f"World Context: {context}\n"
             f"Learner pace: {personalization['pace']}\n"
             f"Learning style: {personalization['style']}\n"
+            f"Age Group: {personalization.get('age_group', '19-35')}\n"
             f"Knowledge level: {personalization['knowledge_level']}\n"
             f"Preferred depth: {personalization['depth']}\n"
             f"Terminology: {personalization['terminology']}\n"
+            f"Tone: {personalization.get('tone', 'neutral')}\n"
+            f"Vocabulary Limit: {personalization.get('vocabulary_limit', 'no limit')}\n"
         )
 
         if quick_wins.get("eli10"):
@@ -98,6 +146,8 @@ class LLMClient:
 
         prompt += (
             "\nUse the sources when relevant, but prioritize the selected World Context for examples.\n"
+            "If an image is provided, incorporate its details into the explanation.\n"
+            "Return JSON with summary, key_points, next_steps, and quiz.\n"
             "Sources:\n"
             f"{source_block}"
         )

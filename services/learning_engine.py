@@ -21,6 +21,7 @@ class LearningEngine:
         context: str = "daily life",
         quick_wins: dict[str, bool] | None = None,
         objective: str = "",
+        image_data: str | None = None,
     ) -> dict[str, Any]:
         learner = self.repository.get_learner(learner_id)
         if learner is None:
@@ -50,6 +51,7 @@ class LearningEngine:
             domain=domain,
             personalization=personalization,
             sources=source_cards,
+            image_data=image_data,
         )
 
         source_highlights = [
