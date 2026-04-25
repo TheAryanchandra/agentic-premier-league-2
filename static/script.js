@@ -3,7 +3,6 @@ let learnerId = null;
 const profileForm = document.getElementById("profile-form");
 const profileActiveView = document.getElementById("profile-active-view");
 const nameInput = document.getElementById("name-input");
-const mobileInput = document.getElementById("mobile-input");
 
 const learnForm = document.getElementById("learn-form");
 const profileStatus = document.getElementById("profile-status");
@@ -37,7 +36,6 @@ profileForm.addEventListener("submit", async (e) => {
   const formData = new FormData(profileForm);
   const payload = {
     name: nameInput.value,
-    mobile: mobileInput.value,
     pace: formData.get("pace"),
     learning_style: formData.get("learning_style"),
     age_group: formData.get("age_group"),
@@ -300,7 +298,6 @@ function onProfileActive(learner) {
   localStorage.setItem("learnerName", learner.name);
   localStorage.setItem("learnerAge", learner.age_group);
   localStorage.setItem("learnerPace", learner.pace);
-  localStorage.setItem("learnerMobile", learner.mobile || "N/A");
 
 
   // Show active profile info in results
@@ -328,7 +325,6 @@ logoutBtn.addEventListener("click", () => {
   localStorage.removeItem("learnerName");
   localStorage.removeItem("learnerAge");
   localStorage.removeItem("learnerPace");
-  localStorage.removeItem("learnerMobile");
   learnerId = null;
   cachedHistory = [];
   
@@ -401,7 +397,6 @@ function openPastLesson(index) {
         name: localStorage.getItem("learnerName") || "Learner",
         age_group: localStorage.getItem("learnerAge") || "19-35",
         pace: localStorage.getItem("learnerPace") || "moderate",
-        mobile: localStorage.getItem("learnerMobile") || "N/A",
         learning_style: "example-based"
       }
     };
