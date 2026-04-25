@@ -295,9 +295,6 @@ function onProfileActive(learner) {
   document.getElementById("profile-container").classList.add("compact");
   
   document.getElementById("active-user-name").textContent = `Welcome, ${learner.name}!`;
-  // document.getElementById("active-user-details").innerHTML = 
-  //   `Mobile: <strong>+91-${learner.mobile || 'N/A'}</strong> | ` +
-  //   `Mode: <strong>${learner.age_group}</strong> | Pace: <strong>${learner.pace}</strong>`;
 
   // Persist for re-opening lessons
   localStorage.setItem("learnerName", learner.name);
