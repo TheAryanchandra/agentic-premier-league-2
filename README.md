@@ -10,6 +10,16 @@ An intelligent assistant that helps users learn new concepts effectively. The sy
 
 ---
 
+
+---
+
+## Live Demo
+
+Try it here: https://concept-learning-engine-551694156067.asia-south1.run.app/
+
+---
+
+
 ## How It Works
 
 The Concept Learning Engine adapts learning content based on:
@@ -107,13 +117,6 @@ python app.py
 
 Open: **http://localhost:8080**
 
----
-
-## Live Demo
-
-Try it here: https://concept-learning-engine-551694156067.asia-south1.run.app/
-
----
 
 ## Use Cases
 
