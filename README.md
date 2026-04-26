@@ -273,15 +273,3 @@ git push origin feature/your-feature
 
 ---
 
-## 📝 License
-
-MIT License - See [LICENSE](LICENSE) file for details
-
----
-
-## 📧 Contact & Support
-
-- **Live Demo**: https://concept-learning-engine-551694156067.asia-south1.run.app/
-- **GitHub Issues**: Open an issue for bugs or feature requests
-- **Email**: your-email@example.com
-
