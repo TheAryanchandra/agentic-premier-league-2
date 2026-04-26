@@ -253,23 +253,6 @@ Traditional education is **one-size-fits-all**—fast learners get bored, slow l
 
 ---
 
-## 🤝 Contributing
-
-We believe in open innovation! Contributions are welcome:
-
-```bash
-# Fork the repository
-git clone https://github.com/YOUR_USERNAME/agentic-premier-league-2.git
-
-# Create a feature branch
-git checkout -b feature/your-feature
-
-# Commit your changes
-git commit -m "Add your feature"
-
-# Push and submit PR
-git push origin feature/your-feature
-```
 
 ---
 
