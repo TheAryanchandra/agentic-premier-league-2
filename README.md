@@ -1,181 +1,139 @@
-Got you—here’s a **clean, fully professional, copy-paste ready README.md** with your problem statement integrated properly and structured like a solid production repo 👇
+# Concept Learning Engine
+
+An intelligent assistant that helps users learn new concepts effectively. The system personalizes content and adapts to user's pace and understanding.
 
 ---
 
-````markdown
-# 🧠 Concept Learning Engine
+## Problem Statement
 
-[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)](https://flask.palletsprojects.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-## 🚀 Problem Statement
-
-Create an intelligent assistant that helps users learn new concepts effectively.  
-The system should personalize content and adapt dynamically to the user’s pace, understanding, and learning style.
+**Create an intelligent assistant that helps users learn new concepts effectively. The system should personalize content and adapt to user's pace and understanding.**
 
 ---
 
-## 💡 Solution
+## How It Works
 
-**Concept Learning Engine** is a multi-domain adaptive learning platform that transforms how users understand complex topics.
+The Concept Learning Engine adapts learning content based on:
 
-From **Quantum Physics → System Design → History**, the engine dynamically personalizes explanations based on:
-
-- Age group  
-- Learning pace  
-- Understanding level  
-- Preferred learning style  
-
-Delivering a deeply tailored and effective learning experience.
+- **User's Pace** - Learn faster or slower as needed
+- **Understanding Level** - Content adjusts to your comprehension
+- **Learning Style** - Personalized explanations tailored to you
 
 ---
 
-## 🌐 Live Demo
+## Features
 
-🚀 Try it here:  
-👉 https://concept-learning-engine-551694156067.asia-south1.run.app/
+### Adaptive Learning
+- Content adjusts in real-time to your learning speed
+- System tracks your understanding level
+- Personalized explanations based on your learning style
 
----
+### Smart Content
+- Real-time intelligent suggestions
+- Topic recommendations based on your profile
+- Multi-domain concept coverage
 
-## ✨ Key Features
+### Progress Tracking
+- Sessions automatically saved
+- Tracks your learning journey
+- Resume from where you left off
 
-### 🚀 Smart Discovery
-- **Debounced Autocomplete**  
-  Real-time intelligent suggestions while typing  
-- **Adaptive Recommendations**  
-  Context-aware topic suggestions based on user profile  
-
----
-
-### 🎭 Personalization Engine
-- **Granular Age Profiles**  
-  Covers 10+ categories (Pre-school → Senior Professional)  
-
-- **Learning Style Modes**
-  - Example-based  
-  - Theory-first  
-  - Balanced  
-
-- **Progressive Memory**
-  - Tracks user learning journey across sessions  
+### Knowledge Verification
+- Built-in quizzes for reinforcement
+- Instant feedback on understanding
 
 ---
 
-### 📖 Premium Learning Experience
-- **Modern UI/UX**
-  - Glassmorphism design  
-  - Mesh gradients  
-  - Smooth micro-interactions  
+## Tech Stack
 
-- **Deep Dive Mode**
-  - Expandable concept breakdowns  
-
-- **Live Source Context**
-  - Wikipedia  
-  - GitHub  
-  - External knowledge sources  
-
-- **Knowledge Checks**
-  - Instant quizzes for reinforcement  
+| Component | Technology |
+|-----------|-----------|
+| Backend | Python 3.11, Flask |
+| Frontend | Vanilla JavaScript, CSS3 |
+| Database | SQLite / Firestore |
+| AI Engine | Google Gemini / Vertex AI |
+| Deployment | Docker, Google Cloud Run |
 
 ---
 
-## 🛠️ Tech Stack
+## Project Structure
 
-| Layer        | Technology |
-|-------------|-----------|
-| Backend     | Python 3.11, Flask |
-| Frontend    | Vanilla JS (ES6+), Modern CSS3 |
-| Database    | SQLite (Local), Firestore (Cloud-ready) |
-| AI Engine   | Gemini / Vertex AI |
-| Deployment  | Docker, Google Cloud Run |
-
----
-
-## 📂 Project Structure
-
-```text
-├── app.py                  # Flask app & API routes
+```
+├── app.py                  # Flask application
 ├── services/
-│   ├── learning_engine.py # Core orchestration logic
-│   ├── llm.py             # AI personalization layer
-│   ├── storage.py         # Persistence (SQLite / Firestore)
-│   └── sources.py         # External data aggregation
+│   ├── learning_engine.py # Core learning logic
+│   ├── llm.py             # AI personalization
+│   ├── storage.py         # Data persistence
+│   └── sources.py         # External data
 ├── static/
-│   ├── style.css          # Design system (HSL-based)
+│   ├── style.css          # Styling
 │   └── script.js          # Frontend logic
 ├── templates/
-│   └── index.html         # UI entry point
-└── Dockerfile             # Production container config
-````
-
----
-
-## 🚦 Getting Started
-
-### 1. Prerequisites
-
-* Python 3.11+
-* (Optional) Google Cloud credentials for AI features
-
----
-
-### 2. Installation
-
-```bash
-git clone https://github.com/TheAryanchandra/agentic-premier-league-2.git
-cd agentic-premier-league-2
-
-pip install -r requirements.txt
+│   └── index.html         # Main UI
+└── Dockerfile             # Container config
 ```
 
 ---
 
-### 3. Environment Setup
+## Getting Started
 
+### Prerequisites
+
+- Python 3.11+
+- pip (Python package manager)
+- (Optional) Google Cloud credentials
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/TheAryanchandra/agentic-premier-league-2.git
+cd agentic-premier-league-2
+```
+
+2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+3. Setup environment
 ```bash
 cp .env.example .env
 ```
 
-Add your API keys if needed.
-
-> 💡 If no API key is provided, the app runs in **Deterministic Tutor Mode** (offline-friendly).
-
----
-
-### 4. Run Locally
-
+4. Run locally
 ```bash
 python app.py
 ```
 
-Open:
-👉 [http://localhost:8080](http://localhost:8080)
+Open: **http://localhost:8080**
 
 ---
 
+## Live Demo
 
-
-## 🛡️ Security & Privacy
-
-* 🔐 Environment variables managed via `.env`
-* 👤 Session-based learning persistence
-* ⚙️ Fully functional without external API keys
-* ☁️ Cloud-ready architecture
+Try it here: https://concept-learning-engine-551694156067.asia-south1.run.app/
 
 ---
 
-## 💡 Use Cases
+## Use Cases
 
-* 📚 Students learning complex subjects
-* 👨‍💻 Developers exploring new technologies
-* 🎯 Self-learners building structured knowledge
-* 🧑‍🏫 Educators creating adaptive teaching flows
+- **Students** - Learn complex subjects at your own pace
+- **Developers** - Explore new technologies tailored to your level
+- **Self-Learners** - Build structured knowledge independently
+- **Educators** - Create adaptive learning flows for diverse classrooms
 
 ---
 
-## 🤝 Contributing
+## Security & Privacy
+
+- Environment variables protected via `.env`
+- Session-based learning persistence
+- Works without external API keys
+- Cloud-ready architecture
+
+---
+
+## Contributing
 
 Contributions are welcome!
 
